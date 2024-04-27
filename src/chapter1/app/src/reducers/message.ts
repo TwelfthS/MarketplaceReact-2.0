@@ -44,13 +44,21 @@ const messageSlice = createSlice({
         state.message = ''
       })
       .addCase(signin.rejected, (state, action) => {
-        state.message = action.error.message || 'Login failed'
+        if (action.payload) {
+          state.message = action.payload.message  || 'Login failed'
+        } else {
+          state.message = 'Unknown error'
+        }
       })
       .addCase(signup.fulfilled, (state, action) => {
         state.message = ''
       })
       .addCase(signup.rejected, (state, action) => {
-        state.message = action.error.message || 'Registration failed'
+        if (action.payload) {
+          state.message = action.payload.message  || 'Registration failed'
+        } else {
+          state.message = 'Unknown error'
+        }
       })
       .addCase(updateCart.fulfilled, (state, action) => {
         state.message = ''

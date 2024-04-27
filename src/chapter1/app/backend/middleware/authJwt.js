@@ -9,7 +9,7 @@ verifyToken = (req, res, next) => {
   
     if (!token) {
       return res.status(403).send({
-        message: "No token provided!"
+        message: "Отсутствует токен!"
       })
     }
   
@@ -18,7 +18,7 @@ verifyToken = (req, res, next) => {
               (err, decoded) => {
                 if (err) {
                   return res.status(401).send({
-                    message: "Unauthorized!",
+                    message: "Требуется авторизация!",
                   })
                 }
                 req.userId = decoded.id

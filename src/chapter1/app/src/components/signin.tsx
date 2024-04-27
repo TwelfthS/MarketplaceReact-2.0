@@ -6,10 +6,8 @@ import { useForm } from "react-hook-form"
 
 import { signin } from "../reducers/authSlice"
 import userService from "../services/user.service"
-import { setMessage } from "../reducers/message"
 import { unwrapResult } from '@reduxjs/toolkit'
 import { updateCart } from '../reducers/user'
-import { AxiosError } from 'axios'
 
 function SignIn() {
   const navigate = useNavigate()
@@ -42,11 +40,7 @@ function SignIn() {
           navigate('/')
       }
     } catch(err) {
-        if (err instanceof AxiosError) {
-          dispatch(setMessage(err))
-        } else {
-            console.log(err)
-        }
+        console.log(err)
         setLoading(false)
     }
   }

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import authService from "../services/auth.service"
-import { User } from "../types"
+import { AxiosErrorResponseData, User } from "../types"
   
 let user: User | null = null
 const storage = localStorage.getItem("user")
@@ -24,19 +24,47 @@ interface Credentials {
     password: string
 }
 
-export const signup = createAsyncThunk(
+export const signup = createAsyncThunk<
+    {user: User},
+    Credentials,
+    {
+        rejectValue: AxiosErrorResponseData
+    }
+>(
     'auth/signup',
-    async ({username, password}: Credentials) => {
-        const data = await authService.register(username, password)
-        return { user: data }
+    async ({username, password}, { rejectWithValue }) => {
+        try {
+           const data = await authService.register(username, password)
+            return { user: data } 
+        } catch(err) {
+            if (err.response.data) {
+                return rejectWithValue(err.response.data)
+            } else {
+                return rejectWithValue({message: "Unknown error"})
+            }
+        }
     }
 )
 
-export const signin = createAsyncThunk(
+export const signin = createAsyncThunk<
+    {user: User},
+    Credentials,
+    {
+        rejectValue: AxiosErrorResponseData
+    }
+>(
     'auth/signin',
-    async ({username, password}: Credentials) => {
-        const data = await authService.login(username, password)
-        return { user: data }
+    async ({username, password}, { rejectWithValue }) => {
+        try {
+            const data = await authService.login(username, password)
+            return { user: data }
+        } catch(err) {
+            if (err.response.data) {
+                return rejectWithValue(err.response.data)
+            } else {
+                return rejectWithValue({message: "Unknown error"})
+            }
+        }
     }
 )
 
