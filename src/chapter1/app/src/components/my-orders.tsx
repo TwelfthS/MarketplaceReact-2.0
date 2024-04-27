@@ -2,31 +2,37 @@ import * as React from 'react'
 import { useEffect, useState } from "react"
 import userService from "../services/user.service"
 import { Navigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { useAppSelector, useAppDispatch } from '../hooks'
 import { CardsDiv, LinkCard, MarginedDiv, OrderCard, Sorter } from "./styled"
-import { setError } from "../actions/errors"
+import { setMessage } from "../reducers/message"
+import { Order } from '../types'
+import { AxiosError } from 'axios'
 
 
 function MyOrders() {
-    const [data, setData] = useState([])
+    const [data, setData] = useState<Order[]>([])
     const [sortType, setSortType] = useState("date")
     const [sortReverse, setSortReverse] = useState(false)
-    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-    const dispatch = useDispatch()
+    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch()
     useEffect(() => {
-        userService.getMyOrders().then((response) => {
-            setData(response.data)
-            if (response.data && response.data.length > 0) {
-                setData(data => [...data].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)))
+        userService.getMyOrders().then((data) => {
+            setData(data)
+            if (data && data.length > 0) {
+                setData(data => [...data].sort((a: Order, b: Order) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()))
             }
-        }).catch(err => {
-            dispatch(setError(err))
+        }).catch((err) => {
+            if (err instanceof AxiosError) {
+                dispatch(setMessage(err))
+            } else {
+                console.log(err)
+            }
         })
     }, [dispatch])
     if (!isLoggedIn) {
         <Navigate to='/' />
     }
-    const sortOrders = (e) => {
+    const sortOrders = (e: React.ChangeEvent<HTMLSelectElement>) => {
         let str = e.target.value
         if (str.includes('D')) {
             setSortReverse(true)
@@ -38,7 +44,7 @@ function MyOrders() {
     }
     useEffect(() => {
         if (sortType === "date") {
-            setData(data => [...data].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)))
+            setData(data => [...data].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()))
         } else if (sortType === "cost") {
             setData(data => [...data].sort((a, b) => a.cost - b.cost))
         }

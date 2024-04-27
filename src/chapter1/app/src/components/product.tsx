@@ -5,9 +5,10 @@ import userService from "../services/user.service"
 
 import { MarginedDiv, StyledButton } from "./styled"
 import { useAppSelector, useAppDispatch } from '../hooks'
-import { setError } from "../actions/errors"
-import { updateCart } from "../actions/user"
+import { setMessage } from "../reducers/message"
+import { updateCart } from "../reducers/user"
 import { Item } from '../types'
+import { AxiosError } from 'axios'
 
 function Product() {
     const params = useParams()
@@ -20,17 +21,21 @@ function Product() {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     useEffect(() => {
-        userService.GetProduct(itemId)
-            .then((response) => {
-                if (response.data) {
-                    setData(response.data)
-                    if (response.data.createdAt) {
-                        setDate(new Date(response.data.createdAt).toLocaleString('ru', { dateStyle: 'short', timeStyle: 'short' }))
+        userService.GetProduct(parseInt(itemId))
+            .then((data) => {
+                if (data) {
+                    setData(data)
+                    if (data.createdAt) {
+                        setDate(new Date(data.createdAt).toLocaleString('ru', { dateStyle: 'short', timeStyle: 'short' }))
                     }
                 }
             })
             .catch((err) => {
-                dispatch(setError(err))
+                if (err instanceof AxiosError) {
+                    dispatch(setMessage(err))
+                } else {
+                    console.log(err)
+                }
             })
     }, [itemId, dispatch])
     const addCart = async (itemId: number) => {
@@ -40,7 +45,7 @@ function Product() {
                 dispatch(updateCart())
                 navigate('/cart')
             } catch(err) {
-                dispatch(setError(err))
+                dispatch(setMessage(err))
             }
         } else {
             navigate('/signin', {state: itemId})

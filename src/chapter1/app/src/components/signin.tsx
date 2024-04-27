@@ -6,8 +6,10 @@ import { useForm } from "react-hook-form"
 
 import { signin } from "../reducers/authSlice"
 import userService from "../services/user.service"
-import { setError } from "../actions/errors"
+import { setMessage } from "../reducers/message"
 import { unwrapResult } from '@reduxjs/toolkit'
+import { updateCart } from '../reducers/user'
+import { AxiosError } from 'axios'
 
 function SignIn() {
   const navigate = useNavigate()
@@ -27,6 +29,7 @@ function SignIn() {
     try {
       const resultAction = await dispatch(signin({username: data.name, password: data.password}))
       unwrapResult(resultAction)
+      await dispatch(updateCart())
       if (location.state) {
           try {
             await userService.addCart(location.state)
@@ -39,7 +42,11 @@ function SignIn() {
           navigate('/')
       }
     } catch(err) {
-        dispatch(setError(err))
+        if (err instanceof AxiosError) {
+          dispatch(setMessage(err))
+        } else {
+            console.log(err)
+        }
         setLoading(false)
     }
   }

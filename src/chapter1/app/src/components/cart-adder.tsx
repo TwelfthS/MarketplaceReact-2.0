@@ -1,12 +1,13 @@
 import * as React from 'react'
 import userService from "../services/user.service"
 import { CartButton } from "./styled"
-import { useDispatch } from "react-redux"
-import { updateCart } from "../actions/user"
+import { useAppDispatch } from "../hooks"
+import { updateCart } from "../reducers/user"
+import { ItemCart as Item } from "../types"
 
 
-const CartAdder = ({item, cart}) => {
-    const dispatch = useDispatch()
+const CartAdder = ({item, cart}: {item: Item, cart: boolean}) => {
+    const dispatch = useAppDispatch()
 
     const add = (itemId: number, change: number | string) => {
         userService.addItem(itemId, change).then(() => {

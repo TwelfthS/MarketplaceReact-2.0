@@ -4,11 +4,12 @@ import userService from "../services/user.service"
 import { useNavigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '../hooks'
 
-import { setError } from "../actions/errors"
+import { setMessage } from "../reducers/message"
 import { AddButton, CardImg, CardsDiv, ImgDiv, LinkCard, ProductCard, Search, SearchDiv, Sorter } from "./styled"
-import { updateCart } from "../actions/user"
+import { updateCart } from "../reducers/user"
 import CartAdder from "./cart-adder"
 import { Item } from '../types'
+import { AxiosError } from 'axios'
 
 
 function Products() {
@@ -22,12 +23,16 @@ function Products() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     useEffect(() => {
-        userService.GetProducts().then((response) => {
-            if (response.data && response.data.length > 0) {
-                setData(response.data.sort((a: Item, b: Item) => a.name.localeCompare(b.name, 'en')))
+        userService.GetProducts().then((data) => {
+            if (data && data.length > 0) {
+                setData(data.sort((a: Item, b: Item) => a.name.localeCompare(b.name, 'en')))
             }
-        }).catch(err => {
-            dispatch(setError(err))
+        }).catch((err) => {
+            if (err instanceof AxiosError) {
+                dispatch(setMessage(err))
+            } else {
+                console.log(err)
+            }
         })
     }, [dispatch])
     const addCart = async (itemId: number) => {
@@ -36,7 +41,7 @@ function Products() {
                 await userService.addCart(itemId)
                 dispatch(updateCart())
             } catch(err) {
-                dispatch(setError(err))
+                dispatch(setMessage(err))
             }
         } else {
             navigate('/signin', {state: itemId})

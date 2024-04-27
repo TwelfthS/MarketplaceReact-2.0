@@ -60,7 +60,6 @@ exports.createOrder = async (req, res) => {
     const cost = req.body.items.reduce((sum, item) => sum + item.price * item.Cart.quantity, 0)
     Order.create({
         userId: req.userId,
-        // orderedItems: items,
         cost: cost
     }).then((order) => {
         order.update({
@@ -71,7 +70,6 @@ exports.createOrder = async (req, res) => {
                 return order.addOrderedItem(item.id, { through: { quantity: item.Cart.quantity } })
             })
             Promise.all(promises).then(() => {
-            // order.addOrderedItem(items, {through: {quantity: quantities}}).then(() => {
                 Cart.destroy({
                     where: {
                         userId: req.userId

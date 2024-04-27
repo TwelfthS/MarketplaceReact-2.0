@@ -10,14 +10,15 @@ import Cart from './components/cart'
 import MyOrders from './components/my-orders'
 
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from './hooks'
+import { messageCleared } from './reducers/message'
 
 function App() {
   let location = useLocation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-      dispatch({type: 'CLEAR_MESSAGE'})
+      dispatch(messageCleared())
   }, [dispatch, location])
   return (
       <div>

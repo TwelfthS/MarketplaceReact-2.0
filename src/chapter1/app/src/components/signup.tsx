@@ -5,6 +5,8 @@ import { Navigate, useNavigate } from 'react-router-dom'
 
 import { signup } from "../reducers/authSlice"
 import { unwrapResult } from '@reduxjs/toolkit'
+import { setMessage } from '../reducers/message'
+import { AxiosError } from 'axios'
 
 function SignUp() {
     const { register, handleSubmit, formState: { errors } } = useForm()
@@ -22,10 +24,14 @@ function SignUp() {
             unwrapResult(resultAction)
             navigate('/')
           } catch(err) {
-            console.log(err)
+            if (err instanceof AxiosError) {
+                dispatch(setMessage(err))
+            } else {
+                console.log(err)
+            }
           }
         } else {
-            dispatch({type: 'SET_MESSAGE', payload: "Пароли не совпадают!"})
+            dispatch(setMessage("Пароли не совпадают!"))
         }
     }
 

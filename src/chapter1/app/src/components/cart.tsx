@@ -1,28 +1,33 @@
 import * as React from 'react'
 import userService from "../services/user.service"
 import { Navigate, useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { useAppDispatch, useAppSelector } from "../hooks"
 import { CardImg, CardsDiv, ImgDiv, LinkCard, ProductCard, RemoveAllButton, StyledButton } from "./styled"
 import CartAdder from "./cart-adder"
-import { updateCart } from "../actions/user"
-import { setError } from "../actions/errors"
+import { updateCart } from "../reducers/user"
+import { setMessage } from "../reducers/message"
+import { AxiosError } from 'axios'
 
 
 function Cart() {
-    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-    const message = useSelector((state) => state.message.message)
+    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+    const message = useAppSelector((state) => state.message.message)
 
     const navigate = useNavigate()
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
-    const data = useSelector(state => state.user.data)
+    const data = useAppSelector(state => state.user.data)
 
-    const removeAll = (itemId) => {
+    const removeAll = (itemId: number) => {
         userService.addItem(itemId, 'removeAll').then(() => {
             dispatch(updateCart())
         }).catch((err) => {
-            dispatch(setError(err))
+            if (err instanceof AxiosError) {
+                dispatch(setMessage(err))
+            } else {
+                console.log(err)
+            }
         })
     }
 
@@ -31,7 +36,7 @@ function Cart() {
             dispatch(updateCart())
             navigate('/my-orders')
         }).catch((err) => {
-            dispatch(setError(err))
+            dispatch(setMessage(err))
         })
     }
 
