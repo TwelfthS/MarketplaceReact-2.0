@@ -1,0 +1,42 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack-dev-server --config webpack.client.js --mode development",
+    "build": "webpack --config webpack.client.js --mode production",
+    "dev": "webpack --config webpack.client.js --mode development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "browserslist": [
+    "last 2 versions"
+  ],
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.2.3",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "html-webpack-plugin": "^5.6.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.23.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack-notifier": "^1.15.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "css-loader": "^7.1.1",
+    "postcss-csso": "^6.0.1",
+    "postcss-loader": "^8.1.1",
+    "style-loader": "^4.0.0",
+    "stylus": "^0.63.0",
+    "stylus-loader": "^8.1.0",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  }
+}

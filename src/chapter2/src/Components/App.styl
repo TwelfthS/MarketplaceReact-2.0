@@ -1,0 +1,78 @@
+.done
+    text-decoration line-through
+
+.chosen
+    background-color rgb(192, 158, 158)
+
+li.done
+    &::before
+        content '👍'
+        top 14px
+        left 5px
+        position absolute
+
+#head
+    padding 0 25%
+    display flex
+
+#main_input
+    width 65%
+    height 50px
+    font-size 30px
+
+#options
+    width 20%
+    display inline-block
+    padding 0
+    overflow hidden
+
+#add
+    width 50px !important
+    margin 5px !important
+
+#head button
+    width 100%
+    height 30px
+    margin-top 5px
+    display inline-block
+    padding 0
+    overflow hidden
+    transition 0.2s
+
+    background-color rgb(15, 221, 15)
+    border none
+    border-radius 5px
+
+#head button
+    &:hover
+        background-color rgb(15, 155, 15)
+
+.list_element
+    cursor pointer
+    font-size 30px
+    width 100%
+    position relative
+    padding 20px 40px
+    contain size
+    height 40px
+    transition 0.2s
+    &:hover
+        background-color rgb(192, 158, 158)
+
+.remove_button
+    cursor pointer
+    position absolute
+    right 0
+    top 0
+    width 10%
+    height 100%
+    font-size 40px
+    border none
+    background-color inherit
+    transition: 0.2s
+    &:hover
+        background-color red
+
+ul
+    list-style-type none
+    padding 0 25%
