@@ -1,33 +1,33 @@
-.done
-    text-decoration line-through
-
-.chosen
+.selected
     background-color rgb(192, 158, 158)
 
-li.done
+.checked
+    text-decoration line-through
     &::before
         content '👍'
-        top 14px
-        left 5px
+        top 30px
+        left 3px
         position absolute
 
 #head
-    padding 0 25%
+    padding 0 20%
     display flex
+    flex-direction row
+    flex-wrap wrap
 
 #main_input
-    width 65%
+    width 500px
     height 50px
+    max-width 100%
     font-size 30px
 
 #options
     width 20%
     display inline-block
-    padding 0
     overflow hidden
 
-#add
-    width 50px !important
+#add, #mult
+    width 100px !important
     margin 5px !important
 
 #head button
@@ -35,10 +35,8 @@ li.done
     height 30px
     margin-top 5px
     display inline-block
-    padding 0
     overflow hidden
     transition 0.2s
-
     background-color rgb(15, 221, 15)
     border none
     border-radius 5px
@@ -47,17 +45,28 @@ li.done
     &:hover
         background-color rgb(15, 155, 15)
 
+.mult-special
+    border 1px solid black !important
+    background-color rgb(15, 155, 15) !important
+
 .list_element
     cursor pointer
     font-size 30px
-    width 100%
+    width 700px
+    max-width: 90%
     position relative
-    padding 20px 40px
-    contain size
-    height 40px
+    padding 10px 40px
+    white-space: pre-wrap
+    word-wrap: break-word
+    height auto
     transition 0.2s
     &:hover
         background-color rgb(192, 158, 158)
+
+
+.list-text
+    width 90%
+    
 
 .remove_button
     cursor pointer
@@ -66,13 +75,12 @@ li.done
     top 0
     width 10%
     height 100%
-    font-size 40px
+    font-size 100%
     border none
     background-color inherit
-    transition: 0.2s
     &:hover
         background-color red
 
 ul
     list-style-type none
-    padding 0 25%
+    padding 0 20%
