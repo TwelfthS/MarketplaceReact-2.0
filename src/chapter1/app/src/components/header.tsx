@@ -8,9 +8,9 @@ function Header() {
     const dispatch = useAppDispatch()
     
     const currentUser = useAppSelector((state) => state.auth.user)
-    const logOut = () => {
+    const logOut = React.useCallback(() => {
         dispatch(loggedOut())
-    }
+    }, [dispatch])
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
@@ -29,4 +29,6 @@ function Header() {
     )
 }
 
-export default Header
+const header = React.memo(Header)
+
+export default header
