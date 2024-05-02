@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "webpack-dev-server --config webpack.client.js --mode development",
     "build": "webpack --config webpack.client.js --mode production",
-    "dev": "webpack --config webpack.client.js --mode development"
+    "serve": "webpack serve --config webpack.client.js --mode development"
   },
   "keywords": [],
   "author": "",

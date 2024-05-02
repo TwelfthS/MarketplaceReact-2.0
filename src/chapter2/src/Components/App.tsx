@@ -84,7 +84,7 @@ function App() {
                 <button id="mult" className={multChoice ? 'mult-special' : ''} onClick={chooseMultiple}>Выбрать несколько</button>
                 {multChoice && <div id="options">
                     <button id="delete" onClick={removeSelected} className="options">Удалить</button>
-                    <button id="check" onClick={checkSelected} className="options">Отметить сделанными</button>
+                    <button id="check" onClick={checkSelected} className="options">Отметить как выполненное</button>
                     <button id="all" onClick={selectAll} className="options">Выбрать всё</button>
                     <button id="clear" onClick={clearSelect} className="options">Отменить выбор</button>
                 </div>}

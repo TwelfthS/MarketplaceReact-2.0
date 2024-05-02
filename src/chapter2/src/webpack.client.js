@@ -58,7 +58,7 @@ module.exports = (env, argv) => {
             main: './client.tsx',
         },
         output: {
-            filename: watchMode ? 'assets/[name].[hash].js' : 'assets/[name].[chunkhash].js',
+            filename: watchMode ? '[name].[hash].js' : '[name].[chunkhash].js',
             path: path.resolve(__dirname, 'dist'),
             publicPath: '/',
         },
