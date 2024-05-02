@@ -2,7 +2,7 @@ import * as React from 'react'
 import userService from "../services/user.service"
 import { CartButton } from "./styled"
 import { useAppDispatch } from "../hooks"
-import { updateCart } from "../reducers/user"
+import { updateCart } from "../reducers/userSlice"
 import { ItemCart as Item } from "../types"
 
 

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 import { signin } from "../reducers/authSlice"
 import userService from "../services/user.service"
 import { unwrapResult } from '@reduxjs/toolkit'
-import { updateCart } from '../reducers/user'
+import { updateCart } from '../reducers/userSlice'
 
 function SignIn() {
   const navigate = useNavigate()

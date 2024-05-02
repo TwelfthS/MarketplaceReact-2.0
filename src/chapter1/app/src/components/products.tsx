@@ -4,9 +4,9 @@ import userService from "../services/user.service"
 import { useNavigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '../hooks'
 
-import { setMessage } from "../reducers/message"
+import { setMessage } from "../reducers/messageSlice"
 import { AddButton, CardImg, CardsDiv, ImgDiv, LinkCard, ProductCard, Search, SearchDiv, Sorter } from "./styled"
-import { updateCart } from "../reducers/user"
+import { updateCart } from "../reducers/userSlice"
 import CartAdder from "./cart-adder"
 import { Item } from '../types'
 import { AxiosError } from 'axios'

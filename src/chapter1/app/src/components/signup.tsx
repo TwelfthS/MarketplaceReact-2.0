@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 
 import { signup } from "../reducers/authSlice"
 import { unwrapResult } from '@reduxjs/toolkit'
-import { setMessage } from '../reducers/message'
+import { setMessage } from '../reducers/messageSlice'
 
 function SignUp() {
     const { register, handleSubmit, formState: { errors } } = useForm()

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { signin, signup } from "./authSlice"
 import { AxiosError } from "axios"
 import { AxiosErrorResponseData } from "../types"
-import { updateCart } from "./user"
+import { updateCart } from "./userSlice"
 
 export type messageState = {
   message: string

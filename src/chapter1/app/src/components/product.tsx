@@ -5,8 +5,8 @@ import userService from "../services/user.service"
 
 import { MarginedDiv, StyledButton } from "./styled"
 import { useAppSelector, useAppDispatch } from '../hooks'
-import { setMessage } from "../reducers/message"
-import { updateCart } from "../reducers/user"
+import { setMessage } from "../reducers/messageSlice"
+import { updateCart } from "../reducers/userSlice"
 import { Item } from '../types'
 import { AxiosError } from 'axios'
 

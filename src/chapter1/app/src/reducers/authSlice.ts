@@ -35,7 +35,7 @@ export const signup = createAsyncThunk<
     async ({username, password}, { rejectWithValue }) => {
         try {
            const data = await authService.register(username, password)
-            return { user: data } 
+            return { user: data }
         } catch(err) {
             if (err.response.data) {
                 return rejectWithValue(err.response.data)
@@ -76,7 +76,7 @@ const authSlice = createSlice({
     reducers: {
         loggedOut(state, action: PayloadAction<void>) {
             authService.logout()
-            state = {
+            return {
                 isLoggedIn: false,
                 user: null
             }

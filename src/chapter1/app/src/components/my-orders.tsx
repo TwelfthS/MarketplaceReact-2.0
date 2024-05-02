@@ -4,7 +4,7 @@ import userService from "../services/user.service"
 import { Navigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '../hooks'
 import { CardsDiv, LinkCard, MarginedDiv, OrderCard, Sorter } from "./styled"
-import { setMessage } from "../reducers/message"
+import { setMessage } from "../reducers/messageSlice"
 import { Order } from '../types'
 import { AxiosError } from 'axios'
 

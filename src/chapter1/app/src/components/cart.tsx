@@ -4,8 +4,8 @@ import { Navigate, useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../hooks"
 import { CardImg, CardsDiv, ImgDiv, LinkCard, ProductCard, RemoveAllButton, StyledButton } from "./styled"
 import CartAdder from "./cart-adder"
-import { updateCart } from "../reducers/user"
-import { setMessage } from "../reducers/message"
+import { updateCart } from "../reducers/userSlice"
+import { setMessage } from "../reducers/messageSlice"
 import { AxiosError } from 'axios'
 
 

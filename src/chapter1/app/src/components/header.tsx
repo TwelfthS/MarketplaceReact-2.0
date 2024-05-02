@@ -22,7 +22,6 @@ function Header() {
                     {currentUser && <Link to="/cart" className="nav-link">Корзина</Link>}
                     {currentUser && <Link to="/my-orders" className="nav-link">Мои заказы</Link>}
                     {currentUser && <Link to="/signin" className="nav-link" onClick={logOut}>Выйти</Link>}
-                    {currentUser && currentUser.username}
                 </div>
             </div>
           </div>

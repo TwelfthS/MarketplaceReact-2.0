@@ -11,7 +11,7 @@ import MyOrders from './components/my-orders'
 
 import { useEffect } from 'react'
 import { useAppDispatch } from './hooks'
-import { messageCleared } from './reducers/message'
+import { messageCleared } from './reducers/messageSlice'
 
 function App() {
   let location = useLocation()
