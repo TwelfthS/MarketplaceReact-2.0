@@ -1,6 +1,6 @@
 import * as React from 'react'
 import userService from "../services/user.service"
-import { CartButton } from "./styled"
+import '../style.scss'
 import { useAppDispatch } from "../hooks"
 import { updateCart } from "../reducers/userSlice"
 import { ItemCart as Item } from "../types"
@@ -33,10 +33,10 @@ const CartAdder = ({item, cart}: {item: Item, cart: boolean}) => {
         }
     }
 
-    return <div className="d-flex flex-row">
-        <CartButton onClick={() => remove(item.id, -1, item.Cart.quantity)}>-</CartButton>
-        <p style={{translate: '0 28%'}}>{item.Cart.quantity}</p>
-        <CartButton onClick={() => add(item.id, 1)}>+</CartButton>
+    return <div className="cart-adder">
+        <button onClick={() => remove(item.id, -1, item.Cart.quantity)}>-</button>
+        <p>{item.Cart.quantity}</p>
+        <button onClick={() => add(item.id, 1)}>+</button>
     </div>
 }
 

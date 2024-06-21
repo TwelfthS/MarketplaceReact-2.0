@@ -3,10 +3,11 @@ import { useEffect, useState } from "react"
 import userService from "../services/user.service"
 import { Navigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '../hooks'
-import { CardsDiv, LinkCard, MarginedDiv, OrderCard, Sorter } from "./styled"
+import '../style.scss'
 import { setMessage } from "../reducers/messageSlice"
 import { Order } from '../types'
 import { AxiosError } from 'axios'
+import { Link } from 'react-router-dom'
 
 
 function MyOrders() {
@@ -53,42 +54,42 @@ function MyOrders() {
         }
     }, [sortType, sortReverse])
     if (data.length === 0) {
-        return <MarginedDiv>
+        return <div className='MarginedDiv'>
             <p>Ещё нет заказов</p>
-        </MarginedDiv>
+        </div>
     }
     return (
         <div>
-            <div style={{height: '100px'}}>
-                <Sorter onChange={sortOrders} className="m-5">
-                    <option value="date">По дате (Возр.)</option>
-                    <option value="dateD">По дате (Уб.)</option>
-                    <option value="cost">По цене (Возр.)</option>
-                    <option value="costD">По цене (Уб.)</option>
-                </Sorter>
-            </div>
-            <CardsDiv>
+            <select onChange={sortOrders} className="sorter m-5">
+                <option value="date">По дате (Возр.)</option>
+                <option value="dateD">По дате (Уб.)</option>
+                <option value="cost">По цене (Возр.)</option>
+                <option value="costD">По цене (Уб.)</option>
+            </select>
+            <div className='cards-block'>
                 {data.map((order) => {
-                    return <OrderCard key={order.id}>
-                        <div style={{maxWidth: '20%'}}>
-                            <h3 className="card-title">Заказ #{order.id}</h3>
-                            <p className="card-text" style={{position: 'absolute', bottom: '10px'}}>Дата заказа: {order.date}</p>
+                    return <div className='order-card' key={order.id}>
+                        <div className='order-title'>
+                            <h3>Заказ #{order.id}</h3>
+                            <p>Дата заказа: {order.date}</p>
                         </div>
-                        <div className="d-flex flex-row justify-content-evenly position-relative" style={{maxHeight: '100%', maxWidth: '70%'}}>
+                        <div className="d-flex flex-row justify-content-evenly order-items">
                             {order.orderedItem.map((item) => {
-                                return <LinkCard to={"/products/" + item.id}>
-                                    <img alt={item.name} style={{width: '100%', height: '80%'}} src={item.image} />
+                                return <div className='order-product'>
+                                    <Link className='product-img-link' to={"/products/" + item.id}>
+                                        <img alt={item.name} src={item.image} />
+                                    </Link>
                                     <p>Кол-во: {item.OrderItem.quantity}</p>
-                                </LinkCard>
+                                </div>
                             })}
                         </div>
-                        <div style={{maxWidth: '10%', padding: '10px'}}>
+                        <div className='order-price'>
                             <p>Цена: {order.cost} руб</p>
                             <p>Всего: {order.orderedItem.reduce((sum, item) => sum + item.OrderItem.quantity, 0)}</p>
                         </div>
-                    </OrderCard>
+                    </div>
                 })}
-            </CardsDiv>
+            </div>
         </div>
     )
 }

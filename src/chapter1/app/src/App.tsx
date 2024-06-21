@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {Routes, Route, useLocation} from 'react-router-dom'
-import './App.css'
+import './style.scss'
 import Header from './components/header'
 import Products from './components/products'
 import SignUp from './components/signup'

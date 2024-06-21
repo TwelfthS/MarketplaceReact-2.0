@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import userService from "../services/user.service"
 
-import { MarginedDiv, StyledButton } from "./styled"
+import '../style.scss'
 import { useAppSelector, useAppDispatch } from '../hooks'
 import { setMessage } from "../reducers/messageSlice"
 import { updateCart } from "../reducers/userSlice"
@@ -55,18 +55,18 @@ function Product() {
         return <p>Item not found</p>
     }
     return (
-        <MarginedDiv>
-            <div style={{width: '200px', height: 'auto', border: '1px solid black', textAlign: 'center', margin: '50px'}}>
-            <h1>{data.name}</h1>
+        <div className='d-flex flex-row flex-wrap'>
+            <div className='product-image-wrapper'>
+                <img alt={data.name} src={data.image}/>
             </div>
-            <img alt={data.name} style={{maxWidth: '400px', maxHeight: '300px', margin: '50px'}} src={data.image}/>
-            <div style={{width: '90%', height: '300px', border: '1px solid black', margin: '50px', padding: '10px'}}>
-                <p>{data.description}</p>
-            </div>
-            <div style={{width: '200px', border: '1px solid black', margin: '50px', padding: '5px'}}>
-               <p>Цена: {data.price}</p>
+            <div className='product-desc'>
+                <h1>{data.name}</h1>
+                <p>Описание: {data.description}</p>
                 <p>Опубликовано: {date}</p>
-                {!cart.map(item => item.id).includes(parseInt(itemId)) && <StyledButton onClick={() => addCart(parseInt(itemId))} style={{translate: '200%'}}>В корзину</StyledButton>}
+            </div>
+            <div className='product-desc'>
+                <p>Цена: {data.price}</p>
+                {!cart.map(item => item.id).includes(parseInt(itemId)) && <button className='styled-button' onClick={() => addCart(parseInt(itemId))}>В корзину</button>}
             </div>
             {message && (
                 <div className="form-group">
@@ -76,7 +76,7 @@ function Product() {
                 </div>
             )}
             
-        </MarginedDiv>
+        </div>
     )
 }
 

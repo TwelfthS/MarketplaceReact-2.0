@@ -11,13 +11,7 @@ const { verifySignUp } = require("./middleware")
 const config = require('./config/config.json').development
 
 const sequelize =
-    new Sequelize(config.database,
-    config.username,
-    config.password, {
-        host: 'localhost',
-        timezone: '+03:00',
-        dialect: 'mysql'
-    })
+    new Sequelize(config)
 
 
 sequelize

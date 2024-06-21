@@ -2,11 +2,12 @@ import * as React from 'react'
 import userService from "../services/user.service"
 import { Navigate, useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../hooks"
-import { CardImg, CardsDiv, ImgDiv, LinkCard, ProductCard, RemoveAllButton, StyledButton } from "./styled"
+import '../style.scss'
 import CartAdder from "./cart-adder"
 import { updateCart } from "../reducers/userSlice"
 import { setMessage } from "../reducers/messageSlice"
 import { AxiosError } from 'axios'
+import { Link } from 'react-router-dom'
 
 
 function Cart() {
@@ -47,34 +48,34 @@ function Cart() {
     if (!data || data.length === 0) {
         return <div className="m-5">
             <p>Корзина пуста</p>
-            <StyledButton onClick={() => navigate('/')}>За покупками</StyledButton>
+            <button className='styled-button' onClick={() => navigate('/')}>За покупками</button>
         </div>
     }
 
     return (
         <div className="d-flex justify-content-between flex-row">
-            <CardsDiv>
+            <div className='cards-block'>
                 {data.map((item) => {
-                    return <ProductCard key={item.id}>
-                        <ImgDiv>
-                            <CardImg src={item.image}></CardImg>
-                        </ImgDiv>
+                    return <div className='product-card' key={item.id}>
+                        <Link className='product-img-link' to={"/products/" + item.id}>
+                            <img src={item.image}></img>
+                        </Link>
                         <div className="card-body">
-                            <LinkCard to={"/products/" + item.id}>{item.name}</LinkCard>
+                            <h3>{item.name}</h3>
                             <p className="card-text">{item.description}</p>
                             <p className="card-text">{item.price} руб</p>
                             <CartAdder item={item} cart={true}/>
-                            <RemoveAllButton onClick={() => removeAll(item.id)}>X</RemoveAllButton>
+                            <button className='remove-all-button' onClick={() => removeAll(item.id)}>X</button>
                         </div>
-                    </ProductCard>
+                    </div>
                 })}
                 
                 
-            </CardsDiv>
-            <div style={{margin: '50px 10%', fontSize: '30px'}}>
+            </div>
+            <div className='cart-total'>
                 <p>Всего товаров: {data.reduce((sum, item) => sum + item.Cart.quantity, 0)}</p>
                 <p>Итоговая цена: {data.reduce((sum, item) => sum + item.price * item.Cart.quantity, 0)}</p>
-                {data.length > 0 && <StyledButton onClick={createOrder}>Купить</StyledButton>}
+                {data.length > 0 && <button className='styled-button' onClick={createOrder}>Купить</button>}
             </div>
             {message && (
                 <div className="form-group">

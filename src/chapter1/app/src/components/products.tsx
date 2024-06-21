@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '../hooks'
 
 import { setMessage } from "../reducers/messageSlice"
-import { AddButton, CardImg, CardsDiv, ImgDiv, LinkCard, ProductCard, Search, SearchDiv, Sorter } from "./styled"
+import '../style.scss'
 import { updateCart } from "../reducers/userSlice"
 import CartAdder from "./cart-adder"
 import { Item } from '../types'
 import { AxiosError } from 'axios'
+import { Link } from 'react-router-dom'
 
 
 function Products() {
@@ -79,29 +80,29 @@ function Products() {
     return (
         <div>
             <div className="d-flex flex-row flex-wrap">
-                <SearchDiv>
-                    <Search id="search" onChange={changeSeacrh}></Search>
+                <div className='search-wrapper'>
+                    <input className='search-bar' id="search" onChange={changeSeacrh}></input>
                     <label htmlFor="search">Поиск</label>
-                </SearchDiv>
-                <Sorter onChange={sortProducts}>
+                </div>
+                <select className='sorter' onChange={sortProducts}>
                     <option value="alphabet">По алфавиту (Возр.)</option>
                     <option value="alphabetD">По алфавиту (Уб.)</option>
                     <option value="date">По дате (Возр.)</option>
                     <option value="dateD">По дате (Уб.)</option>
                     <option value="price">По цене (Возр.)</option>
                     <option value="priceD">По цене (Уб.)</option>
-                </Sorter>
+                </select>
             </div>
-            <CardsDiv>
+            <div className='cards-block'>
 
                 {data.map((item) => {
                     if (item.name.toLowerCase().includes(search)) {
-                        return <ProductCard key={item.id}>
-                            <ImgDiv>
-                                <CardImg src={item.image}></CardImg>
-                            </ImgDiv>
+                        return <div className='product-card' key={item.id}>
+                            <Link className='product-img-link' to={"/products/" + item.id}>
+                                <img src={item.image}></img>
+                            </Link>
                             <div className="card-body">
-                                <LinkCard to={"/products/" + item.id}>{item.name}</LinkCard>
+                                <h3>{item.name}</h3>
                                 <p>{item.description}</p>
                                 <p>{item.price} руб</p>
                                 {cart.map(cartItem => {
@@ -110,9 +111,9 @@ function Products() {
                                     }
                                     return ''
                                 })}
-                                {!cart.map(item => item.id).includes(item.id) && <AddButton onClick={() => addCart(item.id)}>Добавить в корзину</AddButton>}
+                                {!cart.map(item => item.id).includes(item.id) && <button className='add-button' onClick={() => addCart(item.id)}>Добавить в корзину</button>}
                             </div>
-                        </ProductCard>
+                        </div>
                     }
                     return ''
                 })}
@@ -123,7 +124,7 @@ function Products() {
                         </div>
                     </div>
                 )}
-            </CardsDiv>
+            </div>
         </div>
     )
 }
