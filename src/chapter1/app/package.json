@@ -37,7 +37,8 @@
     "test": "react-scripts test --detectOpenHandles",
     "eject": "react-scripts eject",
     "dbr": "cd backend && npx sequelize db:migrate && npx sequelize db:seed:all",
-    "server": "cd backend && node server.js"
+    "server": "cd backend && node server.js",
+    "install_server": "npm install express cors bcryptjs jsonwebtoken sequelize sequelize-cli"
   },
   "eslintConfig": {
     "extends": [
