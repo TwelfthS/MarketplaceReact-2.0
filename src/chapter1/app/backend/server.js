@@ -6,6 +6,19 @@ const userController = require("./controllers/user.controller")
 const { authJwt } = require("./middleware")
 
 const { verifySignUp } = require("./middleware")
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('database/dev.db');
+
+db.all("SELECT name FROM sqlite_master WHERE type='table'", (err, tables) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  tables.forEach(table => {
+    console.log(table.name);
+  });
+  db.close();
+});
 
 
 const config = require('./config/config.json').development
