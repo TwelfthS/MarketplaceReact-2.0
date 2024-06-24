@@ -18,6 +18,10 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Database connection has been established successfully.')
+    sequelize.getQueryInterface().showAllSchemas().then((tableObj) => {
+      console.log('// Tables in database','==========================');
+      console.log(tableObj);
+  })
   })
   .catch(err => {
     console.error('Unable to connect to the database:', err)
