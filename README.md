@@ -3,6 +3,10 @@ Chapter 2: Todo list (webpack)
 
 ## Инструкция по запуску (chapter 1):
 
+Телеграм-бот: @TwelfthSMarketplaceBot (пока что не хостится, могу запустить локально)
+
+Инструкция по запуску приложения (не в боте):
+
 Зайдите в chapter1/app
 
 npm i
