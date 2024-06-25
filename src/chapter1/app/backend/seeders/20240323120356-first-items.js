@@ -1,4 +1,5 @@
 'use strict';
+const url = require('../config/server-address').url
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -7,19 +8,19 @@ module.exports = {
       name: "Toy",
       description: "Very cool toy",
       price: "500",
-      image: "/images/toy.jpg",
+      image: url + "static/toy.jpg",
       createdAt: new Date("2020-01-01")
     }, {
       name: "Shampoo",
       description: "Nice shampoo",
       price: 350,
-      image: "/images/shampoo.jpg",
+      image: url + "static/shampoo.jpg",
       createdAt: new Date("2024-03-31")
     }, {
       name: "Jacket",
       description: "Black leather jacket",
       price: 1200,
-      image: "/images/jacket.jpg",
+      image: url + "static/jacket.jpg",
       createdAt: new Date("2024-01-02")
     }], {});
   },

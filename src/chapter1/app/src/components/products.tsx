@@ -99,7 +99,7 @@ function Products() {
                     if (item.name.toLowerCase().includes(search)) {
                         return <div className='product-card' key={item.id}>
                             <Link className='product-img-link' to={"/products/" + item.id}>
-                                <img src={item.image}></img>
+                                <img alt={item.name} src={item.image}></img>
                             </Link>
                             <div className="card-body">
                                 <h3>{item.name}</h3>

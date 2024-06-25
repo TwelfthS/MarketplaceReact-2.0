@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const path = require('path')
 const { Sequelize } = require('sequelize')
 const authController = require("./controllers/auth.controller")
 const userController = require("./controllers/user.controller")
@@ -43,7 +44,9 @@ app.use(function(req, res, next) {
   next()
 })
 
-app.listen(port, '0.0.0.0', () => {
+app.use('/static', express.static(path.join(__dirname, 'images')))
+
+app.listen(port, () => {
     console.log(`Server is running on port ${port}.`)
 })
 

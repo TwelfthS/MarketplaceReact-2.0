@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect } from 'react'
 import userService from "../services/user.service"
 import { Navigate, useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../hooks"
@@ -8,6 +9,7 @@ import { updateCart } from "../reducers/userSlice"
 import { setMessage } from "../reducers/messageSlice"
 import { AxiosError } from 'axios'
 import { Link } from 'react-router-dom'
+import { useTelegram } from '../hooks/useTelegram'
 
 
 function Cart() {
@@ -19,6 +21,35 @@ function Cart() {
     const dispatch = useAppDispatch()
 
     const data = useAppSelector(state => state.user.data)
+
+    const {tg} = useTelegram()
+
+    useEffect(() => {
+      tg.MainButton.setParams({
+        text: 'Сделать заказ'
+      })
+    }, [])
+  
+    useEffect(() => {
+      if (data && data.length > 0) {
+        tg.MainButton.show()
+      } else {
+        tg.MainButton.hide()
+      }
+    }, [data])
+
+    const onSendData = React.useCallback(async () => {
+        await createOrder()
+        const dataToSend = [...data]
+        tg.sendData(JSON.stringify(dataToSend))
+    }, [data])
+
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData)
+        }
+    }, [])
 
     const removeAll = (itemId: number) => {
         userService.addItem(itemId, 'removeAll').then(() => {
@@ -32,13 +63,14 @@ function Cart() {
         })
     }
 
-    const createOrder = () => {
-        userService.createOrder(data).then(() => {
+    const createOrder = async () => {
+        try {
+            await userService.createOrder(data)
             dispatch(updateCart())
             navigate('/my-orders')
-        }).catch((err) => {
-            dispatch(setMessage(err))
-        })
+        } catch (error) {
+            dispatch(setMessage(error))
+        }
     }
 
     if (!isLoggedIn) {
@@ -58,7 +90,7 @@ function Cart() {
                 {data.map((item) => {
                     return <div className='product-card' key={item.id}>
                         <Link className='product-img-link' to={"/products/" + item.id}>
-                            <img src={item.image}></img>
+                            <img alt={item.name} src={item.image}></img>
                         </Link>
                         <div className="card-body">
                             <h3>{item.name}</h3>

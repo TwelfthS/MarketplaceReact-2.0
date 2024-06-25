@@ -12,10 +12,17 @@ import MyOrders from './components/my-orders'
 import { useEffect } from 'react'
 import { useAppDispatch } from './hooks'
 import { messageCleared } from './reducers/messageSlice'
+import { useTelegram } from './hooks/useTelegram'
 
 function App() {
   let location = useLocation()
   const dispatch = useAppDispatch()
+
+  const {tg, onToggleButton} = useTelegram()
+
+  useEffect(() => {
+    tg.ready()
+}, [])
 
   useEffect(() => {
       dispatch(messageCleared())

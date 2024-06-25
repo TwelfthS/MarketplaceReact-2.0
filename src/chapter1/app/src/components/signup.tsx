@@ -6,6 +6,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { signup } from "../reducers/authSlice"
 import { unwrapResult } from '@reduxjs/toolkit'
 import { setMessage } from '../reducers/messageSlice'
+import { useTelegram } from '../hooks/useTelegram'
 
 function SignUp() {
     const { register, handleSubmit, formState: { errors } } = useForm()
@@ -15,6 +16,8 @@ function SignUp() {
   
     const message = useAppSelector(state => state.message.message)
     const dispatch = useAppDispatch()
+
+    const {user} = useTelegram()
 
     const onSubmit = async (data: {name: string, password: string, repeatPassword: string}) => {
         if (data.password === data.repeatPassword) {
@@ -35,7 +38,8 @@ function SignUp() {
     }
   
     return (
-      <div className="container d-flex justify-content-center align-items-center" style={{minHeight: '50vh'}}>
+      <div className="container d-flex justify-content-center flex-column align-items-center" style={{minHeight: '50vh'}}>
+        {user?.username && <p>Привет, {user?.username}! Создай аккаунт на нашем сайте, чтобы делать заказы</p>}
         <form style={{width: '47vh'}} className="mt-3" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <div className="form-group mb-3">
